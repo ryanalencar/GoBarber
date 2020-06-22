@@ -19,4 +19,5 @@ class App {
     this.server.use(routes);
   }
 }
+
 export default new App().server;

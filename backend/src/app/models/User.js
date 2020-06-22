@@ -8,9 +8,6 @@ class User extends Model {
         email: Sequelize.STRING,
         password_hash: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
-        actived: Sequelize.BOOLEAN,
-        created_at: Sequelize.DATE,
-        updated_at: Sequelize.DATE,
       },
       { sequelize }
     );

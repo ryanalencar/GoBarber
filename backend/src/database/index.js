@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 
-import User from './models/User';
+import User from '../app/models/User';
 
 import databaseCfg from '../config/database';
 
