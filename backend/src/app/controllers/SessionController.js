@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import authConfig from '../../config/auth';
 import User from '../models/User';
+import sessionSchema from '../validations/sessionValidation';
 
 class SessionController {
   async store(req, res) {
@@ -9,6 +10,10 @@ class SessionController {
     const { email, password } = req.body;
 
     const user = await User.findOne({ where: { email } });
+
+    if (!(await sessionSchema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed' });
+    }
 
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
