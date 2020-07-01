@@ -1,11 +1,36 @@
 import { isBefore, startOfHour, parseISO } from 'date-fns';
 
-import Appointment from '../models/Appointments';
+import File from '../models/File';
 import User from '../models/User';
+import Appointment from '../models/Appointments';
 
 import appointmentSchema from '../validations/appointmentValidation';
 
 class AppointmentController {
+  async index(req, res) {
+    const appointments = await Appointment.findAll({
+      where: { user_id: req.userId },
+      order: ['date'],
+      attributes: ['id', 'date'],
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'url', 'path'],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(appointments);
+  }
+
   async store(req, res) {
     if (!(await appointmentSchema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation Fails' });
@@ -54,7 +79,7 @@ class AppointmentController {
     const appointment = await Appointment.create({
       user_id: req.userId,
       provider_id,
-      date,
+      hourStart,
     });
 
     return res.json(appointment);
