@@ -57,6 +57,15 @@ class AppointmentController {
     }
 
     /**
+     * Check if user equal to provider
+     */
+    if (req.userId === provider_id) {
+      res.status(401).json({
+        error: 'Is not permitted to create an appointment to the same user',
+      });
+    }
+
+    /**
      * Check for past dates
      */
     const hourStart = startOfHour(parseISO(date));
