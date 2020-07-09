@@ -6,7 +6,7 @@ import User from '../models/User';
 import Appointment from '../models/Appointments';
 import Notification from '../schemas/Notification';
 
-import Mail from '../../lib/Mail';
+import sendAppointmentCanceledMail from '../../services/sendmail/smtp';
 
 import appointmentSchema from '../validations/appointmentValidation';
 
@@ -162,11 +162,7 @@ class AppointmentController {
 
     const { name, email } = appointment.provider;
 
-    await Mail.sendMail({
-      to: `${name} <${email}>`,
-      subject: 'Agendamento cancelado',
-      text: 'Você tem um novo cancelamento',
-    });
+    sendAppointmentCanceledMail(name, email);
 
     return res.json(appointment);
   }
