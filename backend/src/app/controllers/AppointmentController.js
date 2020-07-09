@@ -1,4 +1,4 @@
-import { isBefore, startOfHour, parseISO, format } from 'date-fns';
+import { isBefore, startOfHour, parseISO, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import File from '../models/File';
@@ -102,6 +102,7 @@ class AppointmentController {
      */
 
     const user = await User.findByPk(req.userId);
+
     const formattedDate = format(
       hourStart,
       "'dia' dd 'de' MMM', às' H:mm'h' ",
@@ -112,6 +113,42 @@ class AppointmentController {
       content: `Novo agendamento de ${user.name} para ${formattedDate}`,
       user: provider_id,
     });
+
+    return res.json(appointment);
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const appointment = await Appointment.findByPk(id);
+
+    if (!appointment) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    /**
+     * Check if userId is the owner of the appointment
+     */
+    if (appointment.user_id !== req.userId) {
+      return res.status(401).json({
+        error: "You don't have permission to cancel this appointment",
+      });
+    }
+
+    /**
+     * Check if date is before 2 hours from appointment date
+     */
+    const dateWithSub = subHours(appointment.date, 2);
+
+    if (isBefore(dateWithSub, new Date())) {
+      return res
+        .status(400)
+        .json({ error: 'You can only cancel appointment 2 hours in advance' });
+    }
+
+    appointment.canceled_at = new Date();
+
+    await appointment.save();
 
     return res.json(appointment);
   }
