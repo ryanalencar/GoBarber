@@ -129,6 +129,11 @@ class AppointmentController {
           as: 'provider',
           attributes: ['name', 'email'],
         },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
       ],
     });
 
@@ -136,6 +141,9 @@ class AppointmentController {
       return res.status(404).json({ error: 'Appointment not found' });
     }
 
+    if (appointment.canceled_at !== null) {
+      return res.status(401).json({ error: 'Appointment already canceled' });
+    }
     /**
      * Check if userId is the owner of the appointment
      */
@@ -161,8 +169,14 @@ class AppointmentController {
     await appointment.save();
 
     const { name, email } = appointment.provider;
+    const { name: userName } = appointment.user;
+    const { date } = appointment;
 
-    sendAppointmentCanceledMail(name, email);
+    const formattedDate = format(date, "'dia' dd 'de' MMM', às' H:mm'h' ", {
+      locale: pt,
+    });
+
+    sendAppointmentCanceledMail(name, email, userName, formattedDate);
 
     return res.json(appointment);
   }
