@@ -1,5 +1,6 @@
 import { isBefore, startOfHour, parseISO, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import formatDate from '../utils/formattedDate';
 
 import File from '../models/File';
 import User from '../models/User';
@@ -105,11 +106,7 @@ class AppointmentController {
 
     const user = await User.findByPk(req.userId);
 
-    const formattedDate = format(
-      hourStart,
-      "'dia' dd 'de' MMM', às' H:mm'h' ",
-      { locale: pt }
-    );
+    const formattedDate = formatDate(hourStart);
 
     await Notification.create({
       content: `Novo agendamento de ${user.name} para ${formattedDate}`,
@@ -172,9 +169,7 @@ class AppointmentController {
     const { name: userName } = appointment.user;
     const { date } = appointment;
 
-    const formattedDate = format(date, "'dia' dd 'de' MMM', às' H:mm'h' ", {
-      locale: pt,
-    });
+    const formattedDate = formatDate(date);
 
     sendAppointmentCanceledMail(name, email, userName, formattedDate);
 
