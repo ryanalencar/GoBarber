@@ -7,7 +7,9 @@ import User from '../models/User';
 import Appointment from '../models/Appointments';
 import Notification from '../schemas/Notification';
 
-import sendAppointmentCanceledMail from '../../services/sendmail/smtp';
+import Queue from '../../lib/Queue';
+import CancellationMail from '../jobs/CancellationMail';
+// import sendAppointmentCanceledMail from '../../services/sendmail/smtp';
 
 import appointmentSchema from '../validations/appointmentValidation';
 
@@ -171,7 +173,13 @@ class AppointmentController {
 
     const formattedDate = formatDate(date);
 
-    sendAppointmentCanceledMail(name, email, userName, formattedDate);
+    // sendAppointmentCanceledMail(name, email, userName, formattedDate);
+    await Queue.add(CancellationMail.key, {
+      name,
+      email,
+      userName,
+      formattedDate,
+    });
 
     return res.json(appointment);
   }

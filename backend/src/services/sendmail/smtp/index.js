@@ -6,7 +6,7 @@ export default async function sendAppointmentCanceledMail(
   username,
   date
 ) {
-  const mail = await Mail.sendMail({
+  const mail = Mail.sendMail({
     to: `${name} <${email}>`,
     subject: 'Agendamento cancelado',
     template: 'cancellation',
