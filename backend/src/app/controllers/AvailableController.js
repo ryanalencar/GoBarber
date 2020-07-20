@@ -15,7 +15,7 @@ class AvailableController {
     const { date } = req.query;
     const { providerId } = req.params;
 
-    console.log('DATE', date);
+    // console.log('DATE', date);
 
     if (!date) {
       return res.status(400).json({ error: 'Invalid date' });
@@ -23,7 +23,7 @@ class AvailableController {
 
     const searchDate = Number(date);
 
-    console.log('SEARCH DATE', searchDate);
+    // console.log('SEARCH DATE', searchDate);
 
     const appointments = await Appointment.findAll({
       where: {
