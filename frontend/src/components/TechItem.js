@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiX } from 'react-icons/fi'
+import PropTypes from 'prop-types'
 
 export default function TechItem({ tech, onDelete }) {
   return (
@@ -10,4 +11,13 @@ export default function TechItem({ tech, onDelete }) {
       </button>
     </li>
   )
+}
+
+TechItem.defaultProps = {
+  tech: 'oculto',
+}
+
+TechItem.propTypes = {
+  tech: PropTypes.string,
+  onDelete: PropTypes.func.isRequired,
 }
