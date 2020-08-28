@@ -3,13 +3,7 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'prettier',
-    'prettier/react',
-  ],
-  parser: 'babel-eslint',
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -20,8 +14,19 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'react/jsx-props-no-spreading': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'import/prefer-default-export': 'off',
-    'jsx-quotes': ['error', 'prefer-single'],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-console': 'warn',
+    'no-plusplus': 'off',
+    'no-param-reassign': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
 }
