@@ -1,0 +1,11 @@
+{
+  "exclude": ["node_modules", "build", "dist", ".vercel", ".next"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["packages/frontend/src/*"],
+      "@/*": ["packages/reactadmin/src/*"],
+      "#/*": ["packages/backend/src/*"]
+    }
+  }
+}
