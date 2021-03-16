@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import authConfig from '../../config/auth';
 import User from '../models/User';
+import File from '../models/File';
 import sessionSchema from '../validations/sessionValidation';
 
 class SessionController {
@@ -9,7 +10,16 @@ class SessionController {
     const { expiresIn, secret } = authConfig;
     const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!(await sessionSchema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation failed' });
@@ -23,13 +33,15 @@ class SessionController {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
-    const { id, name } = user;
+    const { id, name, avatar, provider } = user;
 
     return res.json({
       user: {
         id,
         name,
         email,
+        avatar,
+        provider
       },
       token: jwt.sign({ id }, secret, { expiresIn }),
     });
