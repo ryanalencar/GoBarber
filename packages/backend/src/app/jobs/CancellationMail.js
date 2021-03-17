@@ -1,17 +1,17 @@
-import sendAppointmentCanceledMail from '../../services/sendmail/smtp';
+import sendAppointmentCanceledMail from '../../services/sendmail/smtp'
 
 class CancellationMail {
   get key() {
-    return 'CancellationMail';
+    return 'CancellationMail'
   }
 
   async handle({ data }) {
-    const { name, email, userName, formattedDate } = data;
+    const { name, email, userName, formattedDate } = data
 
-    console.log('A FILA EXECUTOU');
+    console.log('A FILA EXECUTOU')
 
-    await sendAppointmentCanceledMail(name, email, userName, formattedDate);
+    await sendAppointmentCanceledMail(name, email, userName, formattedDate)
   }
 }
 
-export default new CancellationMail();
+export default new CancellationMail()

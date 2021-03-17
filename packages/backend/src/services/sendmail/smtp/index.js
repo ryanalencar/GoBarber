@@ -1,11 +1,6 @@
-import Mail from '../../../lib/Mail';
+import Mail from '../../../lib/Mail'
 
-export default async function sendAppointmentCanceledMail(
-  name,
-  email,
-  username,
-  date
-) {
+export default async function sendAppointmentCanceledMail(name, email, username, date) {
   const mail = Mail.sendMail({
     to: `${name} <${email}>`,
     subject: 'Agendamento cancelado',
@@ -13,9 +8,9 @@ export default async function sendAppointmentCanceledMail(
     context: {
       provider: name,
       user: username,
-      date,
-    },
-  });
+      date
+    }
+  })
 
-  return mail;
+  return mail
 }

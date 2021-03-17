@@ -5,43 +5,43 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       date: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       user_id: {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: true,
+        allowNull: true
       },
       provider_id: {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: true,
+        allowNull: true
       },
       canceled_at: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('now'),
+        defaultValue: Sequelize.fn('now')
       },
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('now'),
-      },
-    });
+        defaultValue: Sequelize.fn('now')
+      }
+    })
   },
 
-  down: (queryInterface) => {
-    return queryInterface.dropTable('appointments');
-  },
-};
+  down: queryInterface => {
+    return queryInterface.dropTable('appointments')
+  }
+}

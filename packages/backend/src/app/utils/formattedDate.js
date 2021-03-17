@@ -1,6 +1,5 @@
-import { format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import pt, { format } from 'date-fns'
 
 export default function formatDate(date) {
-  return format(date, "'dia' dd 'de' MMM', às' H:mm'h' ", { locale: pt });
+  return format(date, "'dia' dd 'de' MMM', às' H:mm'h' ", { locale: pt })
 }

@@ -1,22 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const NotificationSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      required: true,
+      required: true
     },
     user: {
       type: Number,
-      required: true,
+      required: true
     },
     read: {
       type: Boolean,
       required: true,
-      default: false,
-    },
+      default: false
+    }
   },
   { timestamps: true }
-);
+)
 
-export default mongoose.model('Notification', NotificationSchema);
+export default mongoose.model('Notification', NotificationSchema)

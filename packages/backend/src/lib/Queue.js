@@ -1,43 +1,43 @@
-import Bee from 'bee-queue';
-import CancellationMail from '../app/jobs/CancellationMail';
+import Bee from 'bee-queue'
+import CancellationMail from '../app/jobs/CancellationMail'
 
-import redisConfig from '../config/redis';
+import redisConfig from '../config/redis'
 
-const jobs = [CancellationMail];
+const jobs = [CancellationMail]
 
 class Queue {
   constructor() {
-    this.queues = {};
+    this.queues = {}
 
-    this.init();
+    this.init()
   }
 
   init() {
     jobs.forEach(({ key, handle }) => {
       this.queues[key] = {
         bee: new Bee(key, {
-          redis: redisConfig,
+          redis: redisConfig
         }),
-        handle,
-      };
-    });
+        handle
+      }
+    })
   }
 
   add(queue, job) {
-    return this.queues[queue].bee.createJob(job).save();
+    return this.queues[queue].bee.createJob(job).save()
   }
 
   processQueue() {
-    jobs.forEach((job) => {
-      const { bee, handle } = this.queues[job.key];
+    jobs.forEach(job => {
+      const { bee, handle } = this.queues[job.key]
 
-      bee.on('failed', this.handleFailure).process(handle);
-    });
+      bee.on('failed', this.handleFailure).process(handle)
+    })
   }
 
   handleFailure(job, err) {
-    console.log(`Queue ${job.queue.name}: FAILED:`, err);
+    console.log(`Queue ${job.queue.name}: FAILED:`, err)
   }
 }
 
-export default new Queue();
+export default new Queue()
