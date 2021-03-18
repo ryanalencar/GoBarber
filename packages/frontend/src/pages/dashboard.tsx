@@ -1,7 +1,8 @@
 import React from 'react'
+import withAuth from '~/components/common/withAuth'
 
 const Dashboard: React.FC = () => {
-  return <div />
+  return <h1>Dashboard Page</h1>
 }
 
-export default Dashboard
+export default withAuth(Dashboard)

@@ -2,7 +2,7 @@ import { AppProps } from 'next/app'
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import '~/config/Reactotron'
+// import '~/config/Reactotron'
 import GlobalStyle from '~/styles/global'
 import theme from '~/styles/theme'
 
