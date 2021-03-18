@@ -1,10 +1,7 @@
-import nike from '~/assets/nike.svg'
+import React from 'react'
 
-export default function Home() {
-  return (
-    <>
-      <img src={nike} alt="aaaa" />
-      <h1>Hello World</h1>
-    </>
-  )
+const Home: React.FC = () => {
+  return <div />
 }
+
+export default Home
