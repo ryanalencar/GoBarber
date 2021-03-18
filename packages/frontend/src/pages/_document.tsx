@@ -3,9 +3,9 @@ import Document, {
   DocumentInitialProps,
   Html,
   Main,
-  NextScript
+  NextScript,
+  Head
 } from 'next/document'
-import Head from 'next/head'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
