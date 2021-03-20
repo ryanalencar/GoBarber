@@ -7,7 +7,7 @@ import DefaultLayout from '../layouts/default'
 const login = '/login'
 
 export default function withAuth(WrappedComponent: any) {
-  const signed = true
+  const signed = false
   const Layout = signed ? DefaultLayout : AuthLayout
   const AuthHoc = ({ ...props }) => (
     <Layout>
