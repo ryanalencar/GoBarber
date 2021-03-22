@@ -1,12 +1,22 @@
 import React from 'react'
-import logo from '~/assets/logo.svg'
+import Link from 'next/link'
 
-const Home: React.FC = () => {
+import logo from '~/assets/logo.svg'
+import withAuth from '~/components/common/withAuth2'
+
+const Login: React.FC = () => {
   return (
     <>
-      <h1>Home Page</h1> <img src={logo} alt="Logo GoBarber" />
+      <img src={logo} alt="Logo GoBarber" />
+
+      <form>
+        <input type="email" placeholder="Seu e-mail" />
+        <input type="password" placeholder="Sua senha secreta" />
+        <button type="submit">Acessar</button>
+        <Link href="/register">Criar conta gratuita</Link>
+      </form>
     </>
   )
 }
 
-export default Home
+export default withAuth(Login)
