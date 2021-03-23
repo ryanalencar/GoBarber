@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { Form } from '@unform/web'
+import * as Yup from 'yup'
 
-import { useForm } from '../FormController/formContext'
-import Input from '../FormElements/input'
-import Button from '../FormElements/button'
+import { useForm } from '../Form/FormController/formContext'
+import Input from '../Form/FormElements/input'
+import Button from '../Form/FormElements/button'
+import { signUpSchema } from '../Form/FormElements/validate'
 
 function FormRegister({ setStep, name, shown }) {
   const ref = useRef(null)
@@ -14,7 +16,16 @@ function FormRegister({ setStep, name, shown }) {
   }, [name, registerForm, shown])
 
   const handleRegister = async data => {
-    console.log(data)
+    try {
+      await signUpSchema.validate(data, { abortEarly: false })
+      console.log(data)
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errorMessages = {}
+        error.inner.forEach(error => (errorMessages[error.path] = error.message))
+        ref.current.setErrors(errorMessages)
+      }
+    }
   }
 
   return (

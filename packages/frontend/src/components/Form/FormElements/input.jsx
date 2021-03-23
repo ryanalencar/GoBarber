@@ -21,11 +21,18 @@ const StyledInput = styled.input`
     color: rgba(255, 255, 255, 0.7);
   }
 `
+const ErrorMessage = styled.div`
+  color: #ff8080;
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: bold;
+  align-self: flex-start;
+`
 
 export default function Input(props) {
   const inputRef = useRef(null)
   const { name, ...rest } = props
-  const { defaultValue, fieldName, registerField } = useField(name)
+  const { defaultValue, fieldName, registerField, error } = useField(name)
 
   useEffect(() => {
     registerField({
@@ -38,6 +45,9 @@ export default function Input(props) {
   }, [fieldName, registerField])
 
   return (
-    <StyledInput type="text" ref={inputRef} name={name} defaultValue={defaultValue} {...rest} />
+    <>
+      <StyledInput type="text" ref={inputRef} name={name} defaultValue={defaultValue} {...rest} />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </>
   )
 }
