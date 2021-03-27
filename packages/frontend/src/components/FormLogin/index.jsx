@@ -6,10 +6,12 @@ import { useForm } from '../Form/FormController/formContext'
 import Input from '../Form/FormElements/input'
 import Button from '../Form/FormElements/button'
 import { signInSchema } from '../Form/FormElements/validate'
+import { useReducerAuth } from '~/store/hooks'
 
 function FormLogin({ setStep, name, shown }) {
   const ref = useRef(null)
   const { registerForm } = useForm(name)
+  const [, { dispatchLogin }] = useReducerAuth()
 
   useEffect(() => {
     registerForm({ ref: ref.current, name, shown: !!shown })
@@ -18,7 +20,8 @@ function FormLogin({ setStep, name, shown }) {
   const handleLogin = async data => {
     try {
       await signInSchema.validate(data, { abortEarly: false })
-      console.log(data)
+
+      dispatchLogin(...data)
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessages = {}

@@ -4,17 +4,17 @@ export const authActions = {
   failureSign: '@auth/FAILURE_SIGN'
 }
 
-export function requestLogin(payload: any): any {
+export function requestLogin(payload): any {
   return {
     type: authActions.requestLogin,
     payload
   }
 }
 
-export function successLogin(payload: any): any {
+export function successLogin(token: any, user: any): any {
   return {
     type: authActions.successLogin,
-    payload
+    payload: { token, user }
   }
 }
 
