@@ -32,7 +32,7 @@ const ErrorMessage = styled.div`
 export default function Input(props) {
   const inputRef = useRef(null)
   const { name, ...rest } = props
-  const { defaultValue, fieldName, registerField, error } = useField(name)
+  const { defaultValue, fieldName, registerField, error, clearError } = useField(name)
 
   useEffect(() => {
     registerField({
@@ -46,7 +46,14 @@ export default function Input(props) {
 
   return (
     <>
-      <StyledInput type="text" ref={inputRef} name={name} defaultValue={defaultValue} {...rest} />
+      <StyledInput
+        type="text"
+        ref={inputRef}
+        name={name}
+        defaultValue={defaultValue}
+        onFocus={clearError}
+        {...rest}
+      />
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
   )

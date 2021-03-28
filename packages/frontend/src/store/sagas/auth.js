@@ -1,15 +1,12 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-useless-return */
-
 import { useRouter } from 'next/router'
 import { all, takeLatest, call, put } from 'redux-saga/effects'
 import { authActions, successLogin } from '../actions/auth'
 import api from '~/services/api'
 
-export function* signIn({ payload }): any {
+export function* signIn({ payload }) {
   const router = useRouter()
   const { email, password } = payload
-  const response = yield call(api.post, 'session', { email, password })
+  const response = yield call(api.post, 'sessions', { email, password })
 
   const { token, user } = response
 
@@ -20,4 +17,6 @@ export function* signIn({ payload }): any {
   router.push('/dashboard')
 }
 
-export default all([takeLatest(authActions.requestLogin, signIn)])
+export default all([
+  takeLatest(authActions.requestLogin, signIn),
+])

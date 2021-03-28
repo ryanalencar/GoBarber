@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
 
@@ -11,24 +11,27 @@ import { useReducerAuth } from '~/store/hooks'
 function FormLogin({ setStep, name, shown }) {
   const ref = useRef(null)
   const { registerForm } = useForm(name)
-  const [, { dispatchLogin }] = useReducerAuth()
+  const [{ loading, signed }, { dispatchLogin }] = useReducerAuth()
+
+  const handleSigned = useCallback(() => {}, [])
 
   useEffect(() => {
     registerForm({ ref: ref.current, name, shown: !!shown })
   }, [name, registerForm, shown])
 
   const handleLogin = async data => {
-    try {
-      await signInSchema.validate(data, { abortEarly: false })
-
-      dispatchLogin(...data)
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const errorMessages = {}
-        error.inner.forEach(error => (errorMessages[error.path] = error.message))
-        ref.current.setErrors(errorMessages)
-      }
-    }
+    dispatchLogin(data)
+    // try {
+    //   const response = await signInSchema.validate(data, { abortEarly: false })
+    //   if (response) dispatchLogin(response)
+    //   console.log(response)
+    // } catch (error) {
+    //   if (error instanceof Yup.ValidationError) {
+    //     const errorMessages = {}
+    //     error.inner.forEach(error => (errorMessages[error.path] = error.message))
+    //     ref.current.setErrors(errorMessages)
+    //   }
+    // }
   }
 
   return (

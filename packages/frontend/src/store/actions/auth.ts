@@ -4,7 +4,7 @@ export const authActions = {
   failureSign: '@auth/FAILURE_SIGN'
 }
 
-export function requestLogin(payload): any {
+export function requestLogin(payload: any): any {
   return {
     type: authActions.requestLogin,
     payload
