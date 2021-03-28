@@ -4,7 +4,7 @@ import React from 'react'
 import AuthLayout from '../layouts/auth'
 import DefaultLayout from '../layouts/default'
 
-const login = '/login'
+const login = '/'
 
 export default function withAuth(WrappedComponent: any) {
   const signed = false

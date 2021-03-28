@@ -5,7 +5,7 @@ import React from 'react'
 const login = '/login'
 
 const checkUserAuthentication = () => {
-  return true
+  return false
 }
 
 export default function withAuth(WrappedComponent: any) {
