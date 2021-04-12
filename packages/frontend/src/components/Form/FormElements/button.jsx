@@ -16,6 +16,11 @@ const StyledButton = styled.button`
   &:hover {
     background: ${chroma('#3b9eff').darken(0.3)};
   }
+
+  &:disabled {
+    filter: grayscale(100%);
+    cursor: not-allowed;
+  }
 `
 
 export default function Button({ title, type, ...rest }) {
