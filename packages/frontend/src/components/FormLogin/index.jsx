@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react'
+import { useRouter } from 'next/router'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
 
@@ -8,7 +9,6 @@ import Button from '../Form/FormElements/button'
 import { signInSchema } from '../Form/FormElements/validate'
 import { useReducerAuth } from '~/store/hooks'
 import useIsMounted from '../common/useIsMounted'
-import { useRouter } from 'next/router'
 
 function FormLogin({ setStep, name, shown }) {
   const ref = useRef(null)
@@ -50,7 +50,7 @@ function FormLogin({ setStep, name, shown }) {
     <Form onSubmit={handleLogin} ref={ref}>
       <Input name="email" placeholder="Seu e-mail" />
       <Input type="password" name="password" placeholder="Sua senha secreta" />
-      <Button type="submit" title="Acessar" disabled={!!loading} />
+      <Button type="submit" title={loading ? 'Carregando...' : 'Acessar'} disabled={!!loading} />
       <span onClick={() => setStep(1)}>Criar conta gratuita</span>
     </Form>
   )

@@ -25,7 +25,7 @@ export function* signIn({ payload }) {
 
     return true
   } catch (error) {
-    return yield put(failureSign())
+    yield put(failureSign())
   }
 
   // const router = useRouter()
