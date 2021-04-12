@@ -1,6 +1,8 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects'
+import {toast} from 'react-toastify'
 import { authActions, successLogin, failureSign } from '../actions/auth'
 import api from '~/services/api'
+
 
 export function* signIn({ payload }) {
   try {
@@ -12,9 +14,8 @@ export function* signIn({ payload }) {
     const { token, user } = newAuth.data || {}
 
     if (!user.provider) {
-      console.error('usuário não é prestador')
-      alert('usuário não é prestador')
-      return
+      toast.error('Usuário não é prestador')
+      return yield put(failureSign())
     }
 
     if (!token) {
@@ -25,7 +26,8 @@ export function* signIn({ payload }) {
 
     return true
   } catch (error) {
-    yield put(failureSign())
+    toast.error("Falha na autenticação, verifique seus dados")
+    return yield put(failureSign())
   }
 
   // const router = useRouter()

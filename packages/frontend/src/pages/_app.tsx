@@ -2,6 +2,7 @@ import React from 'react'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
 import { PersistGate } from 'redux-persist/integration/react'
 
 // import '~/config/Reactotron'
@@ -16,6 +17,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <ThemeProvider theme={theme}>
           <Component {...pageProps} />
           <GlobalStyle />
+          <ToastContainer autoClose={3000} />
         </ThemeProvider>
       </PersistGate>
     </Provider>
