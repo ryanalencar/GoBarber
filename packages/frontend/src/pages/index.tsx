@@ -1,16 +1,16 @@
 import React from 'react'
 
 import logo from '~/assets/logo.svg'
-import withAuth from '~/components/common/withAuth2'
 import FormsController from '~/components/Form/FormController'
+import PageLayout from '~/components/layouts'
 
 const Login: React.FC = () => {
   return (
-    <>
+    <PageLayout>
       <img src={logo} alt="Logo GoBarber" />
       <FormsController />
-    </>
+    </PageLayout>
   )
 }
 
-export default withAuth(Login)
+export default Login

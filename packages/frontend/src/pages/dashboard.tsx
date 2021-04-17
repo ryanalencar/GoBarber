@@ -1,11 +1,12 @@
 import React from 'react'
-import withAuth from '~/components/common/withAuth2'
-import api from '~/services/api'
-
-api.get('appointments')
+import PageLayout from '~/components/layouts'
 
 const Dashboard: React.FC = () => {
-  return <h1>Dashboard Page</h1>
+  return (
+    <PageLayout>
+      <h1>Dashboard Page</h1>
+    </PageLayout>
+  )
 }
 
-export default withAuth(Dashboard)
+export default Dashboard
