@@ -1,12 +1,20 @@
 export const authActions = {
   requestLogin: '@auth/REQUEST_LOGIN',
   successLogin: '@auth/SUCCESS_LOGIN',
-  failureSign: '@auth/FAILURE_SIGN'
+  failureSign: '@auth/FAILURE_SIGN',
+  requestSignUp: '@auth/REQUEST_SIGNUP'
 }
 
 export function requestLogin(payload: any): any {
   return {
     type: authActions.requestLogin,
+    payload
+  }
+}
+
+export function requestSignUp(payload: any): any {
+  return {
+    type: authActions.requestSignUp,
     payload
   }
 }
