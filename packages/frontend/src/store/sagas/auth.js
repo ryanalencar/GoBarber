@@ -21,6 +21,8 @@ export function* signIn({ payload }) {
       return yield put(failureSign())
     }
 
+    api.defaults.headers.Authorization = `Bearer ${token}`
+
     yield put(successLogin(token, user))
 
     return true
@@ -41,7 +43,7 @@ export function* signUp({ payload }) {
       provider: true
     })
 
-    toast.success("Usuário cadastrado com sucesso. Faça o login.")
+    toast.success('Usuário cadastrado com sucesso. Faça o login.')
   } catch (error) {
     // console.log('error',error)
     toast.error('Falha no cadastro, verifique seus dados!')
@@ -49,7 +51,14 @@ export function* signUp({ payload }) {
   }
 }
 
+export function setToken({ payload }) {
+  if (!payload) return
+  const { token } = payload.auth
+  if (token) api.defaults.headers.Authorization = `Bearer ${token}`
+}
+
 export default all([
+  takeLatest(authActions.rehydrate, setToken),
   takeLatest(authActions.requestLogin, signIn),
   takeLatest(authActions.requestSignUp, signUp)
 ])

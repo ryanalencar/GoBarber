@@ -2,7 +2,8 @@ export const authActions = {
   requestLogin: '@auth/REQUEST_LOGIN',
   successLogin: '@auth/SUCCESS_LOGIN',
   failureSign: '@auth/FAILURE_SIGN',
-  requestSignUp: '@auth/REQUEST_SIGNUP'
+  requestSignUp: '@auth/REQUEST_SIGNUP',
+  rehydrate: 'persist/REHYDRATE'
 }
 
 export function requestLogin(payload: any): any {
