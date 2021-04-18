@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Container, Content, Profile } from './styles'
 
 import logo from '~/assets/logo-purple.svg'
+import Notifications from '../Notifications'
 
 function Header() {
   return (
@@ -15,6 +16,7 @@ function Header() {
         </nav>
 
         <aside>
+          <Notifications />
           <Profile>
             <div>
               <strong>Ryan Alencar</strong>
