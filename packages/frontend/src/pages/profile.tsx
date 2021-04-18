@@ -1,7 +1,12 @@
 import React from 'react'
+import PageLayout from '~/components/layouts'
 
 const Profile: React.FC = () => {
-  return <h1>Profile Page</h1>
+  return (
+    <PageLayout>
+      <h1>Profile Page</h1>
+    </PageLayout>
+  )
 }
 
 export default Profile
