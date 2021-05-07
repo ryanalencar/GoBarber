@@ -8,6 +8,9 @@ interface IBadge {
 interface INotification {
   unread: boolean
 }
+interface INotificationList {
+  visible: boolean
+}
 
 export const Container = styled.div`
   position: relative;
@@ -34,7 +37,7 @@ export const Badge = styled.button<IBadge>`
     `}
 `
 
-export const NotificationList = styled.div`
+export const NotificationList = styled.div<INotificationList>`
   position: absolute;
   width: 260px;
   left: calc(50% - 130px);
@@ -42,6 +45,7 @@ export const NotificationList = styled.div`
   background: rgba(0, 0, 0, 0.6);
   border-radius: 4px;
   padding: 15px 5px;
+  display: ${({ visible }): string => (visible ? 'block' : 'none')};
 
   &::before {
     content: '';
@@ -75,6 +79,8 @@ export const Notification = styled.div<INotification>`
   }
 
   time {
+    display: block;
+    margin-bottom: 3px;
     font-size: 12px;
     opacity: 0.6;
   }
@@ -84,9 +90,6 @@ export const Notification = styled.div<INotification>`
     border: 0;
     background: none;
     color: ${({ theme }): any => chroma(theme.colors.rocketPurple).brighten(1)};
-    padding: 0 5px;
-    margin: 0 5px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 
     &:hover {
@@ -104,6 +107,7 @@ export const Notification = styled.div<INotification>`
         width: 8px;
         background: #ff892e;
         border-radius: 50%;
+        margin-left: 5px;
       }
     `}
 `
