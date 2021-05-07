@@ -5,7 +5,8 @@ import styled, { css } from 'styled-components'
 import PageLayout from '~/components/layouts'
 import Button from '~/components/Form/FormElements/button'
 import { Input } from '~/components/Form/FormElements'
-import { useSelector } from 'react-redux'
+
+import { useReducerUser } from '~/store/hooks'
 
 const Container = styled.div`
   max-width: 600px;
@@ -31,10 +32,14 @@ const Container = styled.div`
     margin: 10px 0 0;
   }
 `
-const Profile: React.FC = () => {
-  const profile = useSelector(state => state.user.profile)
 
-  const handleSubmit = () => {}
+const Profile: React.FC = () => {
+  const [stateUser, { dispatchUpdateProfile }] = useReducerUser()
+  const profile = stateUser.profile
+
+  const handleSubmit = data => {
+    dispatchUpdateProfile(data)
+  }
 
   return (
     <PageLayout>
