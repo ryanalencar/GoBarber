@@ -8,13 +8,13 @@ const StyledButton = styled.button`
   color: #fff;
   margin: 5px 0 0;
   height: 44px;
-  background: #3b9eff;
+  background: ${({ bgColor }) => bgColor};
   border-radius: 4px;
   font-size: 16px;
   transition: all ease 0.3s;
 
   &:hover {
-    background: ${chroma('#3b9eff').darken(0.3)};
+    background: ${({ bgColor }) => chroma(bgColor).darken(0.3)};
   }
 
   &:disabled {
@@ -23,9 +23,9 @@ const StyledButton = styled.button`
   }
 `
 
-export default function Button({ title, type, ...rest }) {
+export default function Button({ title, type, bgColor = '#3b9eff', ...rest }) {
   return (
-    <StyledButton type={type} {...rest}>
+    <StyledButton type={type} bgColor={bgColor} {...rest}>
       {title}
     </StyledButton>
   )

@@ -36,7 +36,6 @@ function FormLogin({ setStep, name, shown }) {
     try {
       const response = await signInSchema.validate(data, { abortEarly: false })
       if (response) dispatchLogin(response)
-      console.log(response)
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errorMessages = {}
