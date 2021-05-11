@@ -41,14 +41,17 @@ function Notifications() {
     setVisible(!visible)
   }
 
-  const handleMarkAsRead = useCallback(async id => {
-    await api.put(`notifications/${id}`)
-    setNotifications(
-      notifications.map(notification =>
-        notification._id === id ? { ...notification, read: true } : notification
+  const handleMarkAsRead = useCallback(
+    async id => {
+      await api.put(`notifications/${id}`)
+      setNotifications(
+        notifications.map(notification =>
+          notification._id === id ? { ...notification, read: true } : notification
+        )
       )
-    )
-  }, [])
+    },
+    [notifications]
+  )
 
   return (
     <Container>
