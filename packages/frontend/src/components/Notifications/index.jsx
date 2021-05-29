@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { MdNotifications } from 'react-icons/md'
-import { formatDistance, parseIso } from 'date-fns'
+import { formatDistance, parseISO } from 'date-fns'
 import pt from 'date-fns/locale/pt'
 
 import api from '~/services/api'
@@ -24,7 +24,7 @@ function Notifications() {
 
       const data = response.data.map(notification => ({
         ...notification,
-        timeDistance: formatDistance(parseIso(notification.createdAt), new Date(), {
+        timeDistance: formatDistance(parseISO(notification.createdAt), new Date(), {
           addSuffix: true,
           locale: pt
         })

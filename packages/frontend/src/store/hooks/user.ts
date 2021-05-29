@@ -4,7 +4,7 @@ import { updateProfileRequest } from '../actions/user'
 import { IRootState } from '../reducers'
 
 export function useReducerUser(): any {
-  const stateUser = useSelector<IRootState>(state => state.auth)
+  const stateUser = useSelector<IRootState>(state => state.user)
   const dispatch = useDispatch()
 
   const dispatchUpdateProfile = useCallback(

@@ -7,6 +7,7 @@ import Button from '~/components/Form/FormElements/button'
 import { Input } from '~/components/Form/FormElements'
 
 import { useReducerUser } from '~/store/hooks'
+import AvatarInput from '~/components/AvatarInput'
 
 const Container = styled.div`
   max-width: 600px;
@@ -45,6 +46,7 @@ const Profile: React.FC = () => {
     <PageLayout>
       <Container>
         <Form initialData={profile} onSubmit={handleSubmit}>
+          <AvatarInput name="avatar_id" />
           <Input name="name" placeholder="Nome completo" />
           <Input type="email" name="email" placeholder="Seu endereço de email" />
           <hr />
