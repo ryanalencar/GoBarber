@@ -6,9 +6,17 @@ import { updateProfileFailure, updateProfileSuccess, userActions } from '../acti
 
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, avatar_id, ...rest } = payload
+    console.log('payload saga',payload)
+    const { name, email, avatar_id, ...rest } = payload.data
 
-    const profile = Object.assign({ name, email, avatar_id }, rest.oldPassword ? rest : {})
+    const profile = Object.assign(
+      {
+        name,
+        email,
+        avatar_id
+      },
+      rest.oldPassword ? rest : {}
+    )
 
     const response = yield call(api.put, 'users', profile)
 
@@ -16,6 +24,7 @@ export function* updateProfile({ payload }) {
 
     yield put(updateProfileSuccess(response.data))
   } catch (error) {
+    console.log(error);
     toast.error('Erro ao atualizar perfil. Verifique seus dados')
     yield put(updateProfileFailure())
   }

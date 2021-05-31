@@ -4,17 +4,17 @@ export const userActions = {
   failureUpdateProfile: '@user/UPDATE_PROFILE_FAILURE'
 }
 
-export function updateProfileRequest(payload: any): any {
+export function updateProfileRequest(data: any): any {
   return {
     type: userActions.requestUpdateProfile,
-    payload
+    payload: { data }
   }
 }
 
-export function updateProfileSuccess(payload: any): any {
+export function updateProfileSuccess(profile: any): any {
   return {
     type: userActions.successUpdateProfile,
-    payload
+    payload: { profile }
   }
 }
 

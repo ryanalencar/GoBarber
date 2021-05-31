@@ -4,8 +4,7 @@ import { authActions } from '../actions/auth'
 const defaultAuth = {
   token: null,
   signed: false,
-  loading: false,
-  profile: null
+  loading: false
 }
 
 export default function authReducer(state = defaultAuth, action): any {

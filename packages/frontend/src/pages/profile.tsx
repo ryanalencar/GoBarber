@@ -39,6 +39,7 @@ const Profile: React.FC = () => {
   const profile = stateUser.profile
 
   const handleSubmit = data => {
+    console.log(data)
     dispatchUpdateProfile(data)
   }
 
