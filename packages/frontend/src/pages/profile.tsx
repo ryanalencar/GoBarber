@@ -6,7 +6,7 @@ import PageLayout from '~/components/layouts'
 import Button from '~/components/Form/FormElements/button'
 import { Input } from '~/components/Form/FormElements'
 
-import { useReducerUser } from '~/store/hooks'
+import { useReducerAuth, useReducerUser } from '~/store/hooks'
 import AvatarInput from '~/components/AvatarInput'
 
 const Container = styled.div`
@@ -36,10 +36,15 @@ const Container = styled.div`
 
 const Profile: React.FC = () => {
   const [stateUser, { dispatchUpdateProfile }] = useReducerUser()
+  const [, { dispatchSignOut }] = useReducerAuth()
   const profile = stateUser.profile
 
   const handleSubmit = data => {
     dispatchUpdateProfile(data)
+  }
+
+  const handleSignOut = () => {
+    dispatchSignOut()
   }
 
   return (
@@ -55,7 +60,7 @@ const Profile: React.FC = () => {
           <Input type="password" name="confirmPassword" placeholder="Confirme sua nova senha" />
           <Button type="submit" title="Atualizar Perfil" />
         </Form>
-        <Button type="button" title="Sair do GoBarber" bgColor="#f64c75" />
+        <Button type="button" onClick={handleSignOut} title="Sair do GoBarber" bgColor="#f64c75" />
       </Container>
     </PageLayout>
   )

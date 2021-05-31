@@ -17,6 +17,9 @@ export default function userReducer(state = defaultUser, action): any {
       case userActions.successUpdateProfile:
         draft.profile = payload.profile
         break
+      case authActions.signOut:
+        draft.profile = null
+        break
       default:
     }
   })

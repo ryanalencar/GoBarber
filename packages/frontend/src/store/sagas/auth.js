@@ -57,7 +57,12 @@ export function setToken({ payload }) {
   if (token) api.defaults.headers.Authorization = `Bearer ${token}`
 }
 
+export function signOut() {
+  toast.info("Usuário deslogado")
+}
+
 export default all([
+  takeLatest(authActions.signOut, signOut),
   takeLatest(authActions.rehydrate, setToken),
   takeLatest(authActions.requestLogin, signIn),
   takeLatest(authActions.requestSignUp, signUp)

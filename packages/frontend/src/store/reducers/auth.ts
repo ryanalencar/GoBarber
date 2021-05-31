@@ -22,6 +22,10 @@ export default function authReducer(state = defaultAuth, action): any {
       case authActions.failureSign:
         draft.loading = false
         break
+      case authActions.signOut:
+        draft.token = null
+        draft.signed = false
+        break
       default:
         return state
     }

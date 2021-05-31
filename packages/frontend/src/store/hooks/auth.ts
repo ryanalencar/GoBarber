@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { requestLogin, requestSignUp } from '../actions/auth'
+import { requestLogin, requestSignUp, signOut } from '../actions/auth'
 import { IRootState } from '../reducers'
 
 export function useReducerAuth(): any {
@@ -21,5 +21,9 @@ export function useReducerAuth(): any {
     [dispatch]
   )
 
-  return [stateAuth, { dispatchLogin, dispatchSignUp }]
+  const dispatchSignOut = useCallback(() => {
+    dispatch(signOut())
+  }, [dispatch])
+
+  return [stateAuth, { dispatchLogin, dispatchSignUp, dispatchSignOut }]
 }
