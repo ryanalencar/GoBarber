@@ -6,7 +6,6 @@ import { updateProfileFailure, updateProfileSuccess, userActions } from '../acti
 
 export function* updateProfile({ payload }) {
   try {
-    console.log('payload saga',payload)
     const { name, email, avatar_id, ...rest } = payload.data
 
     const profile = Object.assign(
