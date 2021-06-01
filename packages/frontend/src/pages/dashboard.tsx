@@ -1,10 +1,22 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import styled, { DefaultTheme } from 'styled-components'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
-import { format, subDays, addDays } from 'date-fns'
+import {
+  format,
+  subDays,
+  addDays,
+  setHours,
+  setMinutes,
+  setSeconds,
+  isBefore,
+  parseISO
+} from 'date-fns'
 import { pt } from 'date-fns/locale'
+import { utcToZonedTime } from 'date-fns-tz'
 
 import PageLayout from '~/components/layouts'
+import useIsMounted from '~/components/common/useIsMounted'
+import api from '~/services/api'
 
 interface IStyledProps {
   theme?: DefaultTheme
@@ -44,34 +56,66 @@ const Container = styled.div`
   }
 `
 
-const Time = styled.li`
+const Time = styled.li<IStyledProps>`
   padding: 20px;
   border-radius: 4px;
   background: #fff;
 
   opacity: ${({ past }) => (past ? 0.6 : 1)};
-
-  strong {
-    display: block;
-    color: ${({ theme, available }: IStyledProps) =>
-      available ? '#666' : theme.colors.rocketPurple};
-    font-size: 20px;
-    font-weight: normal;
-  }
-
-  span {
-    display: block;
-    margin-top: 3px;
-    color: ${({ available }) => (available ? '#999' : '#666')};
-  }
 `
 
+const TimeHour = styled.strong<IStyledProps>`
+  display: block;
+  color: ${({ theme, available }: IStyledProps) =>
+    available ? '#666' : theme.colors.rocketPurple};
+  font-size: 20px;
+  font-weight: normal;
+`
+
+const TimeStatus = styled.span<IStyledProps>`
+  display: block;
+  margin-top: 3px;
+  color: ${({ available }) => (available ? '#999' : '#666')};
+`
+
+const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
 const Dashboard: React.FC = () => {
+  const isMounted = useIsMounted()
   const [date, setDate] = useState(new Date())
+  const [schedule, setSchedule] = useState([])
 
   const dateFormatted = useMemo(() => {
     return format(date, "d 'de' MMMM", { locale: pt })
   }, [date])
+
+  useEffect(() => {
+    async function loadSchedule() {
+      if (isMounted.current) {
+        const response = await api.get('schedule', {
+          params: { date }
+        })
+
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+        const data = range.map(hour => {
+          const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0)
+          const compareDate = utcToZonedTime(checkDate, timezone)
+
+          return {
+            time: `${hour}:00h`,
+            past: isBefore(compareDate, new Date()),
+            appointment: response.data.find(
+              a => parseISO(a.date).toString() === compareDate.toString()
+            )
+          }
+        })
+
+        setSchedule(data)
+      }
+    }
+    loadSchedule()
+  }, [date, isMounted])
 
   const handlePrevDay = () => {
     setDate(subDays(date, 1))
@@ -95,22 +139,14 @@ const Dashboard: React.FC = () => {
         </header>
 
         <ul>
-          <Time past>
-            <strong>08:00</strong>
-            <span>Diego Fernandes</span>
-          </Time>
-          <Time available>
-            <strong>09:00</strong>
-            <span>Em aberto</span>
-          </Time>
-          <Time>
-            <strong>10:00</strong>
-            <span>Em aberto</span>
-          </Time>
-          <Time>
-            <strong>11:00</strong>
-            <span>Em aberto</span>
-          </Time>
+          {schedule.map(({ time, past, appointment }) => (
+            <Time key={time} past={past} available={!appointment}>
+              <TimeHour available={!appointment}>{time}</TimeHour>
+              <TimeStatus available={!appointment}>
+                {appointment ? appointment.user.name : 'Em Aberto'}
+              </TimeStatus>
+            </Time>
+          ))}
         </ul>
       </Container>
     </PageLayout>
