@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import styled, { DefaultTheme } from 'styled-components'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
+import { format, subDays, addDays } from 'date-fns'
+import { pt } from 'date-fns/locale'
+
 import PageLayout from '~/components/layouts'
 
 interface IStyledProps {
@@ -64,15 +67,29 @@ const Time = styled.li`
 `
 
 const Dashboard: React.FC = () => {
+  const [date, setDate] = useState(new Date())
+
+  const dateFormatted = useMemo(() => {
+    return format(date, "d 'de' MMMM", { locale: pt })
+  }, [date])
+
+  const handlePrevDay = () => {
+    setDate(subDays(date, 1))
+  }
+
+  const handleNextDay = () => {
+    setDate(addDays(date, 1))
+  }
+
   return (
     <PageLayout>
       <Container>
         <header>
-          <button type="button">
+          <button type="button" onClick={handlePrevDay}>
             <MdChevronLeft color="#fff" size={32} />
           </button>
-          <strong>01 de Junho</strong>
-          <button type="button">
+          <strong>{dateFormatted}</strong>
+          <button type="button" onClick={handleNextDay}>
             <MdChevronRight color="#fff" size={32} />
           </button>
         </header>
