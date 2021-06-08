@@ -89,7 +89,7 @@ module.exports = {
       },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
-      }
+      },
     }
     // workspaces: {
     //   extensions: ['.mjs', '.js', '.ts', '.tsx', '.json'],
