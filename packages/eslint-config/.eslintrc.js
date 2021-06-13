@@ -7,14 +7,15 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'standard',
-    'prettier/standard',
-    'prettier/react',
+    // 'standard',
+    // 'prettier/standard',
+    // 'prettier/react',
     // 'plugin:import/errors',
     // 'plugin:import/warnings',
+    'prettier',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint'
+    // 'prettier/@typescript-eslint'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
